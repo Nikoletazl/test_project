@@ -1,13 +1,13 @@
-
 import os
 from pathlib import Path
+
+import cloudinary
 
 from test_project.web.utils import is_production
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('SECRET_KEY', '')
-
 
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 APP_ENVIRONMENT = os.getenv('APP_ENVIRONMENT', 'Development')
@@ -58,14 +58,14 @@ TEMPLATES = [
 WSGI_APPLICATION = 'test_project.wsgi.application'
 
 DEFAULT_DATABASE_CONFIG = {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.getenv('DB_NAME', 'test_project_db'),
-            'USER': os.getenv('DB_USER', 'postgres'),
-            'PASSWORD': os.getenv('DB_PASSWORD', 'postgres'),
-            'HOST': os.getenv('DB_HOST', '127.0.0.1'),
-            'PORT': os.getenv('DB_PORT', '5432'),
+    'ENGINE': 'django.db.backends.postgresql',
+    'NAME': os.getenv('DB_NAME', 'test_project_db'),
+    'USER': os.getenv('DB_USER', 'postgres'),
+    'PASSWORD': os.getenv('DB_PASSWORD', 'postgres'),
+    'HOST': os.getenv('DB_HOST', '127.0.0.1'),
+    'PORT': os.getenv('DB_PORT', '5432'),
 
-    }
+}
 
 DATABASES = {
     'default': DEFAULT_DATABASE_CONFIG,
@@ -133,3 +133,9 @@ LOGGING = {
         }
     }
 }
+
+cloudinary.config(
+    cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME', None),
+    api_key=os.getenv('CLOUDINARY_API_KEY', None),
+    api_secret=os.getenv('CLOUDINARY_API_SECRET', None),
+)
