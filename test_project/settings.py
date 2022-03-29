@@ -6,7 +6,7 @@ from test_project.web.utils import is_production
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.getenv('SECRET_KEY', 'sk')
+SECRET_KEY = os.getenv('SECRET_KEY', '')
 
 
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
