@@ -15,23 +15,13 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-0(@-=iw4r4y7a24@w4@p(*igue+937ijdki60ak-+2#ef@2!8y'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
+APP_ENVIRONMENT = os.getenv('APP_ENVIRONMENT')
 
-ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-    'test-project-app2.herokuapp.com',
-]
-
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(' ')
 
 # Application definition
 
@@ -78,30 +68,36 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'test_project.wsgi.application'
 
+DATABASES = None
 
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+if APP_ENVIRONMENT == 'Production':
+    DATABASES = {
 
+        'default': {
 
-DATABASES = {
+            'ENGINE': 'django.db.backends.postgresql',
 
-    'default': {
+            'NAME': 'd6qg1ho0850434',
 
-        'ENGINE': 'django.db.backends.postgresql',
+            'USER': 'sosnidcrekgmqh',
 
-        'NAME': 'd6qg1ho0850434',
+            'PASSWORD': 'a9e3a06b957fe45882f0d2113fe1a9be5ad3a22ffb20117093b608ed3e434676',
 
-        'USER': 'sosnidcrekgmqh',
+            'HOST': 'ec2-176-34-211-0.eu-west-1.compute.amazonaws.com',
 
-        'PASSWORD': 'a9e3a06b957fe45882f0d2113fe1a9be5ad3a22ffb20117093b608ed3e434676',
+            'PORT': '5432',
 
-        'HOST': 'ec2-176-34-211-0.eu-west-1.compute.amazonaws.com',
-
-        'PORT': '5432',
+        }
 
     }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'db.sqlite3',
+        }
+    }
 
-}
 
 
 # Password validation
